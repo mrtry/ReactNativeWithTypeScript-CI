@@ -7,13 +7,6 @@ jobs:
     steps:
       - checkout
 
-      - restore_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-
-      - restore_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-
-      - run: yarn install && yarn tsc
 
       - save_cache:
           key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
@@ -44,31 +37,13 @@ jobs:
       - checkout:
           path: ~/ReactNativeWithTypeScript-CI
 
-      - attach_workspace:
-          at: ~/ReactNativeWithTypeScript-CI
-
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run: yarn install && yarn tsc
 
       - run:
           name: Debug Build
           command: ./gradlew assembleDebug
 
-      - save_cache:
-          paths: ~/android/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-
-      - store_test_results:
-          path: test-results
-
-      - store_artifacts:
-          path: test-results
-
 workflows:
   version: 2
-  node-android-ios:
     jobs:
-      - node
-      - android:
-          requires:
-            - node
+      - android
