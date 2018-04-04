@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/ReactNativeWithTypeScript-CI
     docker:
-      - image: circleci/node:8
+      - image: circleci/android:api-27-node8-alpha
     steps:
       - checkout
 
