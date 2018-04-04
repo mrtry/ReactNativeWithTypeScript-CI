@@ -1,49 +1,14 @@
 version: 2
 jobs:
-  node:
+  build:
     working_directory: ~/ReactNativeWithTypeScript-CI
     docker:
       - image: circleci/node:8
     steps:
       - checkout
 
-
-      - save_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-          paths:
-            - ~/.cache/yarn
-
-      - save_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-          paths:
-            - node_modules
-
-      - persist_to_workspace:
-          root: ~/ReactNativeWithTypeScript-CI
-          paths:
-            - node_modules
-
-      - store_test_results:
-          path: test-results
-
-      - store_artifacts:
-          path: test-results
-
-  android:
-    working_directory: ~/ReactNativeWithTypeScript-CI/android
-    docker:
-      - image: circleci/android:api-27-node8-alpha
-    steps:
-      - checkout:
-          path: ~/ReactNativeWithTypeScript-CI
-
       - run: yarn install && yarn tsc
 
       - run:
           name: Debug Build
-          command: ./gradlew assembleDebug
-
-workflows:
-  version: 2
-    jobs:
-      - android
+          command: ./android/gradlew assembleDebug
