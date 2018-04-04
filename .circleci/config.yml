@@ -11,4 +11,4 @@ jobs:
 
       - run:
           name: Debug Build
-          command: export TERM=${TERM:-dumb} && ./node_modules/.bin/react-native run-android
+          command: export TERM=${TERM:-dumb} && cd android && ./gradlew assembleDebug
