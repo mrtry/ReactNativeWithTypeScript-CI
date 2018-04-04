@@ -11,4 +11,4 @@ jobs:
 
       - run:
           name: Debug Build
-          command: ./android/gradlew assembleDebug
+          command: export TERM=${TERM:-dumb} && ./android/gradlew assembleDebug
