@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: 'deploygate'
 
 import com.android.build.OutputFile
 
